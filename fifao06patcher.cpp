@@ -45,7 +45,7 @@ int main()
 	cout << "fifa06 patcher" << endl;
 	cout << "input file to patch: "; cin >> filename;
 
-	fstream file(filename, ios::binary | ios::in);
+	fstream file(filename, ios::binary | ios::in | ios::out);
 
 	if(file.is_open())
 	{
@@ -69,7 +69,7 @@ int main()
 		cout << endl << "[>] Estimated CRC: 0x" << hex << checksum << endl;
 		
 		cout << "[>] Patching.." << endl;
-		file.seekg(0x10);//Checksum address
+		file.seekg(0xA);//Checksum address
 		file.write(reinterpret_cast<const char *>(&checksum), sizeof(checksum));		
 
 		file.close();
@@ -80,5 +80,5 @@ int main()
 		cout << "error opening file" << endl;
 		exit(1);
 	}
-
+	return 0;
 }
