@@ -61,10 +61,10 @@ int main()
 		file.read(memory, length);
 
 
-		//patch crc
+		//patch crc 1
 		//r0= 0x02243654  , r1=0x124
 		//0x02243654 correspond to byte 52 of file mapped into memory
-		cout << "[>] Computing checksum.." << endl;
+		cout << "[>] Computing checksum 1.." << endl;
 		int checksum = checksumCalculation((uint*)(memory+52),0x124);
 		cout << endl << "[>] Estimated CRC: 0x" << hex << checksum << endl;
 		
@@ -72,6 +72,19 @@ int main()
 		file.seekg(0xA);//Checksum address
 		file.write(reinterpret_cast<const char *>(&checksum), sizeof(checksum));		
 
+		
+		//patch crc 2
+		//r0= 0x022439D8  , r1=0xD98
+		//0x022439D8 correspond to byte 0x3B8(952) of file mapped into memory
+		cout << "[>] Computing checksum 2.." << endl;
+		int checksum2 = checksumCalculation((uint*)(memory+952),0x124);
+		cout << endl << "[>] Estimated CRC: 0x" << hex << checksum2 << endl;
+		
+		cout << "[>] Patching.." << endl;
+		file.seekg(0x10);//Checksum address
+		file.write(reinterpret_cast<const char *>(&checksum2), sizeof(checksum2));
+		
+		
 		file.close();
 		delete [] memory;
 	}
