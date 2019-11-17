@@ -77,7 +77,7 @@ int main()
 		//r0= 0x022439D8  , r1=0xD98
 		//0x022439D8 correspond to byte 0x3B8(952) of file mapped into memory
 		cout << "[>] Computing checksum 2.." << endl;
-		int checksum2 = checksumCalculation((uint*)(memory+952),0x124);
+		int checksum2 = checksumCalculation((uint*)(memory+952),0xD98);
 		cout << endl << "[>] Estimated CRC: 0x" << hex << checksum2 << endl;
 		
 		cout << "[>] Patching.." << endl;
